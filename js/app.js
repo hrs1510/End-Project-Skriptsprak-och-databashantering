@@ -4,6 +4,7 @@ const Poster_URL = 'https://image.tmdb.org/t/p/w500'; // Base URL for movie post
 
 // main container to render movies into
 const movie = document.getElementById('movies-container');
+const logo = document.querySelector('.logo');
 // popular movies URL
 const movie_url = `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
@@ -24,6 +25,7 @@ async function movieData() {
     const start = (currentPage - 1) * pageSize;  // calculate start index of current page
     const pageItems = results.slice(start, start + pageSize);   // to get movies for current page. it shows from which index to which index.
     console.log(pageItems);
+
     // clear container
     movie.innerHTML = ''; // we are clearing the movie container before rendering new content because we want to replace the old content with the new page content.
 
@@ -34,6 +36,17 @@ async function movieData() {
     pageItems.forEach(item => {
       const li = document.createElement('li'); // create list item for each movie
       li.className = 'movie-item';
+
+      // add poster image if available
+      if (item.poster_path) {  // check if poster path is available
+        const img = document.createElement('img');  // create image element for movie poster
+        img.className = 'movie-poster';
+        img.src = Poster_URL + item.poster_path;  //
+        img.alt = item.title ;
+        img.width = 200; // small thumbnail; change as needed or style via CSS
+        li.appendChild(img);
+      }
+
 // to show moviw title
       const title = document.createElement('div');
       title.className = 'movie-title';
@@ -90,6 +103,12 @@ async function movieData() {
 
   // initial render
   renderPage(1);
+// add event listener to logo to reset to first page on click
+    logo.addEventListener('click', (e) => {
+      e.preventDefault();
+      renderPage(1);
+    });
+
 }
 
 // invoke and handle errors without try/catch inside the function
