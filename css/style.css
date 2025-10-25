@@ -14,7 +14,7 @@ body { display: flex; flex-direction: column; min-height: 100vh; }
   gap: 10px;
   min-height: 100px;
   border-bottom: 2px solid #dee2e6;
-  flex-wrap: nowrap; // keep children on one row on larger screens
+  flex-wrap: nowrap;  
 }
 
 .logo {
@@ -79,6 +79,68 @@ body { display: flex; flex-direction: column; min-height: 100vh; }
   color: white;
   font-size: 16px;
   cursor: pointer;
+}
+.main-box {
+  flex: 1 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+}
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.movie-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.movie-item {
+  background: #c7efef;
+  padding: 50px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.movie-item.expanded {
+  height: auto;
+}
+
+.movie-item .movie-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+
+.movie-poster {
+  width: 400px;            /* small fixed width */
+  height: 500px;          /* fixed height for consistent cards */
+  object-fit: cover;
+  margin: 0 auto
+  display: block;
+  border-radius: 6px;
+}
+.movie-overView {
+  color: #333;
+  font-size: 14px;
+  margin: 8px 0 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  text-align: left;
 }
 
 .footer-box {

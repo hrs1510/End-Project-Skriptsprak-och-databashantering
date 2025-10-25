@@ -43,7 +43,7 @@ async function movieData() {
         img.className = 'movie-poster';
         img.src = Poster_URL + item.poster_path;  //
         img.alt = item.title ;
-        img.width = 200; // small thumbnail; change as needed or style via CSS
+        img.width = 100; // small thumbnail; change as needed or style via CSS
         li.appendChild(img);
       }
 
