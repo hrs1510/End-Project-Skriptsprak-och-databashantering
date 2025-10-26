@@ -94,6 +94,10 @@ html, body { margin: 0; padding: 0; height: 100%; }
   font-size: 16px;
   color: inherit;
 }
+.search-box input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #2e67ba;
+}
 .search-box button {
   padding: 6px 12px;
   border: none;
@@ -139,7 +143,8 @@ html, body { margin: 0; padding: 0; height: 100%; }
   align-items: center;
 }
 .movie-item:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px);  /* Moves the item up by 8px on hover */
+  transition: transform 0.3s ease;  /* Smooth transition for the hover effect */
   box-shadow: 0 20px 40px rgba(16,24,40,0.14);
 }
 .movie-item.expanded {
@@ -186,7 +191,7 @@ html, body { margin: 0; padding: 0; height: 100%; }
 }
 /* Styles for pagination buttons */
 .pagination-controls > .prev,
-.pagination-controls > .next {
+.pagination-controls > .next {  /* Targeting direct child elements with classes 'prev' and 'next' */
   display: flex;
   align-items: center;
   justify-content: center;

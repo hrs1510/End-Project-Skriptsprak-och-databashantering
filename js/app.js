@@ -163,7 +163,7 @@ const firstVisit = () => {
   setActiveTab(popularLink);
   movieData(urls.popular).catch(err => {
     console.error(err);
-    if (movie) movie.textContent = 'Failed to load movies.';
+    if (movie) movie.textContent = 'Failed to load movies.'; // first check if there is any movie and then display error message in movie container if fetch fails
   });
 }
 setActiveTab(popularLink);
