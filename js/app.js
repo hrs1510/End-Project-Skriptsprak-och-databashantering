@@ -12,6 +12,10 @@ const popularLink  = document.getElementById('popular-movies');
 const topRatedLink = document.getElementById('TopRated-movies');
 const upcomingLink = document.getElementById('upcoming-movies');
 
+// search button and input field
+const searchInput = document.getElementById('search-input');
+const searchButton = document.querySelector('.search-button');
+
 const urls = {
   popular:  `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
   topRated: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`,
@@ -21,7 +25,7 @@ const urls = {
 // to toggle which tab is active
 function setActiveTab(linkTab) {
   document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-  linkTab.classList.add('active');
+  if (linkTab) linkTab.classList.add('active');
 }
 
 
@@ -68,7 +72,7 @@ async function movieData(movie_url) {
       title.className = 'movie-title';
       title.textContent = item.title || 'Untitled';
       li.appendChild(title);
-// to show moviw overview
+// to show movie overview
       const overView = document.createElement('p');
       overView.className = 'movie-overView';
       overView.textContent = item.overview
@@ -125,7 +129,7 @@ async function movieData(movie_url) {
 
 }
 
-// wire up the three tabs
+// all nav link event listeners
 popularLink.addEventListener('click', (e) => {
   e.preventDefault();
   setActiveTab(popularLink);  // set popular tab as active
@@ -167,6 +171,37 @@ movieData(urls.popular).catch(err => {
   console.error(err);
   if (movie) movie.textContent = 'Failed to load movies.';
 });
+
+
+// Search Movies Function
+function searchMovies(movieName) {
+  if (!movieName.trim()) {
+    movie.textContent = "Please enter a movie name.";
+    return;
+  }
+
+  const searchUrl = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(movieName)}&page=1`;
+
+  setActiveTab(null); // to deactivate all tabs when searching
+
+  movieData(searchUrl)
+    .then(() => {
+      searchInput.value = ""; // it clears input after results load
+    })
+    .catch(err => {
+      console.error(err);
+      movie.textContent = "Movie not found!";
+      searchInput.value = ""; // it clears even if an error occurs
+    });
+
+}
+
+// Handle search button click
+searchButton.addEventListener('click', () => {
+  const movie_name = searchInput.value;
+  searchMovies(movie_name);
+});
+
 
 //resets to the first page of the current dataset on logo click
 logo.addEventListener('click', (e) => {
