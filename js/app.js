@@ -77,6 +77,7 @@ async function movieData() {
 
     // show page navigation buttons (uncomment to enable)
     const prev = document.createElement('button');
+    prev.className = 'prev';
     prev.textContent = 'Prev';
     prev.disabled = currentPage === 1;  // disable prev button when current page is  first page
     prev.addEventListener('click', () => renderPage(currentPage - 1));
@@ -86,11 +87,13 @@ async function movieData() {
 
     // show only page number info without prev/next buttons
     const pageInfo = document.createElement('span');
+    pageInfo.className = 'page-info';
     pageInfo.textContent = ` Page ${currentPage} of ${totalPages} `;
     pageNumberbutton.appendChild(pageInfo);
 
     // show next button
     const next = document.createElement('button');
+    next.className = 'next';
     next.textContent = 'Next';
     next.disabled = currentPage === totalPages;  // disable next button when current page is last page
     next.addEventListener('click', () => renderPage(currentPage + 1));
