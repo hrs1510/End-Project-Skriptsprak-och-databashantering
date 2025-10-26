@@ -13,6 +13,10 @@ movie data is fetched from API using fetch method of JS. Url is constructed dyna
 In search input, I have added event listener for input event. so whenever user types something in search box, API is called with search query and results are shown accordingly.
 search box also has placeholder text 'Search movies...' to indicate user about its functionality. and when data fetched , its value set to empty to clear previous search query.
 The logo FILMLY is also clickable and on clicking it, user is redirected to home page showing popular movies.
+Each filter in navigation bar is also clickable and on clicking it, respective filter is applied and movies are shown accordingly.
+Each movie card is also clickable and on clicking it, a modal is shown with more details about the movie like release date, overview, original language etc.
+this modal can be closed by clicking on close button or clicking outside the modal.
+this modal disables background scrolling when opened to focus on modal content.
 
 In pagination we are showing 10 movies per page. We can navigate between pages using previous and next buttons. total number of pages is calculated on the basis of total results returned by API and number of movies per page.
 prev and next buttons are disabled when we are on first or last page respectively.

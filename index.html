@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Movie Browser</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="/favicon.ico">
   <meta name="description" content="Browse popular movies using The Movie Database API">
 </head>
+
 <body class="body">
 <header>
   <div class="header-box">
@@ -21,7 +23,7 @@
       </ul>
     </nav>
     <div class="search-box">
-      <input type="text" id="search-input" placeholder="Search movies...">
+      <input type="text" id="search-input" placeholder="Search movies..." autoComplete="off">
       <button class="search-button">Search</button>
     </div>
   </div>
@@ -30,15 +32,14 @@
 <main>
   <div class="main-box">
     <div id="movies-container">
-
     </div>
   </div>
-
 </main>
 <footer>
   <div class="footer-box">
     <div class="created-by">
-      <p>Created by <a href="https://github.com/hrs1510?tab=repositories&q=&type=public&language=&sort="><strong>Himanshu
+      <p>Created by <a
+        href="https://github.com/hrs1510?tab=repositories&q=&type=public&language=&sort="><strong>Himanshu
         Rani</strong></a></p>
     </div>
     <div class="data-by">
@@ -50,5 +51,31 @@
     </div>
   </div>
   <script src="js/app.js"></script>
+  <div id="movie-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" id="close-modal">&times;</span>
+      <div id="modal-body">
+        <div class="modal-header">
+          <img id="modal-poster" src="" alt="Movie Poster" class="modal-poster">
+          <div class="modal-info">
+            <h2 id="modal-title"></h2>
+            <p id="modal-tagline" class="tagline"></p>
+            <div class="modal-meta">
+              <span id="modal-rating" class="rating"></span>
+              <span id="modal-runtime" class="runtime"></span>
+              <span id="modal-release-date" class="release-date"></span>
+              <span id="modal-languages" class="languages"></span>
+            </div>
+            <div id="modal-genres" class="genres"></div>
+          </div>
+        </div>
+        <div class="modal-overview">
+          <h3>Overview</h3>
+          <p id="modal-overview-text"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
