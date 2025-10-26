@@ -28,6 +28,12 @@ html, body { margin: 0; padding: 0; height: 100%; }
   flex: 0 0 auto;
   font-family: 'Courier New', Courier, monospace;
   font-style: italic;
+  padding: 20px;
+  border-radius: 50%;   //makes the logo circular
+}
+.logo:hover {
+  text-decoration: underline;
+  background-color: #0d5959;
 }
 /************************************************************/
 /* Navigation styles */
@@ -58,6 +64,17 @@ html, body { margin: 0; padding: 0; height: 100%; }
   border-radius: 4px;
   transition: background-color 0.3s;
 }
+
+/* Active link styles to know which li is active currently*/
+.nav li a.active {
+  background-color: #0d5959;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 8px 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: all 0.3s ease-in-out;
+}
+
 .nav li a:hover {
   background-color: #2e67ba;
   color: white;

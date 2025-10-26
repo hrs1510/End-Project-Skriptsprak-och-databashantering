@@ -5,18 +5,35 @@ const Poster_URL = 'https://image.tmdb.org/t/p/w500'; // Base URL for movie post
 // main container to render movies into
 const movie = document.getElementById('movies-container');
 const logo = document.querySelector('.logo');
-// popular movies URL
-const movie_url = `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
-async function movieData() {
+
+// Nav links
+const popularLink  = document.getElementById('popular-movies');
+const topRatedLink = document.getElementById('TopRated-movies');
+const upcomingLink = document.getElementById('upcoming-movies');
+
+const urls = {
+  popular:  `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
+  topRated: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`,
+  upcoming: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`,
+};
+
+// to toggle which tab is active
+function setActiveTab(linkTab) {
+  document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+  linkTab.classList.add('active');
+}
+
+
+async function movieData(movie_url) {
 // fetch popular movies data from API
   const response = await fetch(movie_url);
-  if (!response.ok) throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
+  if (!response.ok) throw new Error(`Fetch failed`);
   const data = await response.json();  // parse response as JSON
   const results = data.results;
 
-  // Pagination setUp (10 per page)
-  const pageSize = 10;  // number of movies to show per page
+  // Pagination setUp (9 per page)
+  const pageSize = 9;  // number of movies to show per page
   let currentPage = 1;   // current page number
   const totalPages = Math.max(1, Math.ceil(results.length / pageSize)); // calculate total pages based on results length and page size
 // function to render a specific page of movies(e.g., page 1, page 2, etc.) depends on user interaction.
@@ -24,7 +41,6 @@ async function movieData() {
     currentPage = Math.min(Math.max(1, page), totalPages); // to keep page in bounds, by calculating max of 1 and page which is values then min of that and totalPages
     const start = (currentPage - 1) * pageSize;  // calculate start index of current page
     const pageItems = results.slice(start, start + pageSize);   // to get movies for current page. it shows from which index to which index.
-    console.log(pageItems);
 
     // clear container
     movie.innerHTML = ''; // we are clearing the movie container before rendering new content because we want to replace the old content with the new page content.
@@ -41,13 +57,13 @@ async function movieData() {
       if (item.poster_path) {  // check if poster path is available
         const img = document.createElement('img');  // create image element for movie poster
         img.className = 'movie-poster';
-        img.src = Poster_URL + item.poster_path;  //
+        img.src = Poster_URL + item.poster_path;  // set image source to full poster URL
         img.alt = item.title ;
-        img.width = 100; // small thumbnail; change as needed or style via CSS
+        img.width = 100;
         li.appendChild(img);
       }
 
-// to show moviw title
+// to show movie title
       const title = document.createElement('div');
       title.className = 'movie-title';
       title.textContent = item.title || 'Untitled';
@@ -70,7 +86,7 @@ async function movieData() {
     movie.appendChild(ul);  // append unordered list to main container
 
 
-    // simple controls: Prev/Next pagebuttons
+    // spagination control buttons
 
     const pageNumberbutton = document.createElement('div');
     pageNumberbutton.className = 'pagination-controls';
@@ -106,13 +122,57 @@ async function movieData() {
 
   // initial render
   renderPage(1);
-// add event listener to logo to reset to first page on click
-    logo.addEventListener('click', (e) => {
-      e.preventDefault();
-      renderPage(1);
-    });
 
 }
+
+// wire up the three tabs
+popularLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  setActiveTab(popularLink);  // set popular tab as active
+  movieData(urls.popular).catch(err => {  // fetch and render popular movies
+    console.error(err);
+    if (movie) movie.textContent = 'Failed to load movies.';  // first check if there is any movie and then display error message in movie container if fetch fails
+  });
+});
+
+topRatedLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  setActiveTab(topRatedLink);  // set top rated tab as active
+  movieData(urls.topRated).catch(err => {   // fetch and render top rated movies
+    console.error(err);
+    if (movie) movie.textContent = 'Failed to load movies.';
+  });
+});
+
+upcomingLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  setActiveTab(upcomingLink);
+  movieData(urls.upcoming).catch(err => {
+    console.error(err);
+    if (movie) movie.textContent = 'Failed to load movies.';
+  });
+});
+
+
+// load Popular-movies by default on first visit
+const firstVisit = () => {
+  setActiveTab(popularLink);
+  movieData(urls.popular).catch(err => {
+    console.error(err);
+    if (movie) movie.textContent = 'Failed to load movies.';
+  });
+}
+setActiveTab(popularLink);
+movieData(urls.popular).catch(err => {
+  console.error(err);
+  if (movie) movie.textContent = 'Failed to load movies.';
+});
+
+//resets to the first page of the current dataset on logo click
+logo.addEventListener('click', (e) => {
+  e.preventDefault();   // prevent default link behavior to avoid page reload
+  firstVisit()   // reset to first page of current dataset
+});
 
 // invoke and handle errors without try/catch inside the function
 movieData().catch(err => {
