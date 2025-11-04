@@ -36,6 +36,7 @@ async function movieData(movie_url) {
   if (!response.ok) throw new Error(`Fetch failed`);
   const data = await response.json();  // parse response as JSON
   const results = data.results;
+  console.log(results);
 
   // Pagination setUp (9 per page)
   const pageSize = 9;  // number of movies to show per page
@@ -88,7 +89,6 @@ async function movieData(movie_url) {
       popularity.className = 'movie-popularity';
       popularity.textContent = `Popularity: ${item.popularity || 'N/A'}`;
       li.appendChild(popularity);
-
       ul.appendChild(li); // append list item to unordered list
 
       li.addEventListener('click', () => {
@@ -188,6 +188,7 @@ function searchMovies(movieName) {
     });
 
 }
+
 // Handle search button click
 searchButton.addEventListener('click', () => {
   const movie_name = searchInput.value;
@@ -219,6 +220,7 @@ function setTextContent(id, text) {
     element.textContent = text || 'N/A';
   }
 }
+
 // this function sets image source of an element by its ID or empty string if src is empty
 function setImageSource(id, src) {
   const element = document.getElementById(id);
@@ -226,6 +228,7 @@ function setImageSource(id, src) {
     element.src = src || '';
   }
 }
+
 // Function to show movie details in a modal
 async function showMovieDetails(movieId) {
   const movieDetailsUrl = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`;  // Movie details URL created using movie ID,api key and base URL
@@ -255,3 +258,4 @@ async function showMovieDetails(movieId) {
 
   model.style.display = 'block';
 }
+
